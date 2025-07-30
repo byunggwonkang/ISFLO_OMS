@@ -3,7 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
 
-
+  
   buildModules: [
     '@nuxtjs/moment'
   ],
@@ -98,6 +98,11 @@ export default defineNuxtConfig({
       cache: {
         maxAge: 60 * 60 * 24 * 7
       }
+    }
+  },
+  nitro: {
+    externals: {
+      external: ['xlsx'], // <- 이 줄이 핵심!
     }
   }
 })
