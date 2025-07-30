@@ -100,6 +100,11 @@ export default defineNuxtConfig({
       }
     }
   },
+  vite: {
+    ssr: {
+      noExternal: ['xlsx']
+    }
+  },
   nitro: {
     externals: {
       external: ['xlsx'], // <- 이 줄이 핵심!
