@@ -76,19 +76,20 @@ const onClickExportExcel = async () => {
   const XLSX = await import('xlsx') // 동적 import
   const { saveAs } = await import('file-saver') // 이것도 동적으로
   
+  
   if (filters.value.FLT_VIEW_OPT === '0010')
   {
     const table = document.getElementById('OU030100_GRD09005')
     const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
     const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'table.xlsx')
+    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'Order List by Orders.xlsx')
   }
   else
   {
     const table = document.getElementById('OU030100_GRD09006')
     const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
     const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'table.xlsx')
+    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'Order List by Products.xlsx')
   }
 
   
