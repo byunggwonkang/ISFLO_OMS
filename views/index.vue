@@ -13,21 +13,12 @@ onMounted(() => {
 <template>
   <div class="flex flex-col justify-center items-center w-full min-h-full mx-auto space-y-3 h-screen">
     <div class="pb-2 pl-2 -mt-10">
-      <div class="flex items-center space-x-12">
-        <div>
-          <img
-            alt="Logo"
-            src="~/assets/img/logo/callaway-company-logo.svg"
-            class="h-8 lg:h-12"
-          >
-        </div>
-        <div>
-          <img
-            alt="Logo"
-            class="h-12"
-            src="~/assets/img/logo/travismathew-logo.svg"
-          >
-        </div>
+      <div>
+        <img
+          alt="Logo"
+          src="~/assets/img/logo/ISFLO.svg"
+          class="h-8 lg:h-12"
+        >
       </div>
     </div>
     <div>

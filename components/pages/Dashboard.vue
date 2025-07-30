@@ -82,7 +82,10 @@ const days = [
 </script>
 
 <template>
-  <div class="m-5">
+  <div 
+    v-if="false"
+    class="m-5" 
+  >
     <div class="relative isolate overflow-hidden ">
       <!-- Secondary navigation -->
       <header class="pb-4 sm:pb-6">
