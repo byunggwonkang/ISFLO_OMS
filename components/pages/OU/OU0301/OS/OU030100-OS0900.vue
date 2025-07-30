@@ -73,25 +73,49 @@ const onClickOrderDetailRefresh = async () => {
 
 const onClickExportExcel = async () => {
 
-  const XLSX = await import('xlsx') // 동적 import
-  const { saveAs } = await import('file-saver') // 이것도 동적으로
-  
-  
-  if (filters.value.FLT_VIEW_OPT === '0010')
-  {
-    const table = document.getElementById('OU030100_GRD09005')
-    const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'Order List by Orders.xlsx')
-  }
-  else
-  {
-    const table = document.getElementById('OU030100_GRD09006')
-    const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'Order List by Products.xlsx')
+  const { utils, write } = await import('xlsx')
+  const { saveAs } = await import('file-saver')
+
+  // 1. 테이블 선택
+  let table = null
+  let fileName = ''
+
+  if (filters.value.FLT_VIEW_OPT === '0010') {
+    table = document.getElementById('OU030100_GRD09005')
+    fileName = 'Order List by Orders.xlsx'
+  } else {
+    table = document.getElementById('OU030100_GRD09006')
+    fileName = 'Order List by Products.xlsx'
   }
 
+  if (!table) {
+    return
+  }
+
+  // 2. 워크북 생성 (원본 테이블 그대로)
+  const wb = utils.table_to_book(table, { sheet: 'Sheet1' })
+  const ws = wb.Sheets['Sheet1']
+
+  // 3. 모든 셀을 텍스트 형식으로 변환
+  const sheetRef = ws['!ref']
+  if (sheetRef) {
+    const range = utils.decode_range(sheetRef)
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const addr = utils.encode_cell({ r: R, c: C })
+        const cell = ws[addr]
+        if (cell && cell.v != null) {
+          cell.t = 's'           // 셀 타입을 문자열로 강제
+          cell.z = '@'           // 엑셀 표시 형식을 텍스트로
+          cell.v = String(cell.v)
+        }
+      }
+    }
+  }
+
+  // 4. 다운로드
+  const wbout = write(wb, { bookType: 'xlsx', type: 'array' })
+  saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
   
 }
 
