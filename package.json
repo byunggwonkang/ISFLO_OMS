@@ -72,6 +72,8 @@
     "vue-json-excel3": "^1.0.19",
     "crypto-js": "^4.2.0",
     "swiper": "^11.0.5",
-    "vue-easy-lightbox": "^1.19.0"
+    "vue-easy-lightbox": "^1.19.0",
+    "xlsx": "^0.18.5",
+    "file-saver": "^2.0.5"
   }
 }

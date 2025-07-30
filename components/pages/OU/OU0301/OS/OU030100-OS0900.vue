@@ -1,4 +1,6 @@
 <script setup>
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 import { decrypt } from '@/stores/common/aes'
 import { useLoadingStore } from '@/stores/common/loading'
 const isloading = useLoadingStore()
@@ -69,6 +71,26 @@ const onClickOrderDetailRefresh = async () => {
   toggleLoading()
 
   resetPage()
+}
+
+const onClickExportExcel = async () => {
+
+  if (filters.value.FLT_VIEW_OPT === '0010')
+  {
+    const table = document.getElementById('OU030100_GRD09005')
+    const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'table.xlsx')
+  }
+  else
+  {
+    const table = document.getElementById('OU030100_GRD09006')
+    const wb = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' })
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+    saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'table.xlsx')
+  }
+
+  
 }
 
 const orderDetailTableColumnsByOrderID = computed(() => {
@@ -212,20 +234,34 @@ const onClickOrderDetailRow = (item) => {
           :placeholder="getComponentData('OU030100_TXT09001', 'placeholder')"
         />
       </FormGroup>
-
-      <div class="flex">
-        <Button
-          id="OU030100_BTN03001"
-          variant="gray"
-          rounded
-          size="sm"
-          :disabled="loading"
-          :loading="loading"
-          @click="onClickOrderDetailRefresh"
-        >
-          {{ getComponentData ('OU030100_BTN03001', 'caption') }}
-        </Button>
-      </div>
+      <div class="grid grid-cols-2">
+        <div class="text-start">
+          <Button
+            id="OU030100_BTN03001"
+            variant="gray"
+            rounded
+            size="sm"
+            :disabled="loading"
+            :loading="loading"
+            @click="onClickOrderDetailRefresh"
+          >
+            {{ getComponentData ('OU030100_BTN03001', 'caption') }}
+          </Button>
+        </div>
+        <div class="text-end">
+          <Button
+            id="OU030100_BTN03002"
+            variant="gray"
+            rounded
+            size="sm"
+            :disabled="loading || !orderDetailList?.length"
+            :loading="loading"
+            @click="onClickExportExcel"
+          >
+            {{ getComponentData ('OU030100_BTN09003', 'caption','EXCEL Export') }}
+          </Button>
+        </div>
+      </div>  
     </div>
 
     <div class="pl-3 space-y-2">
@@ -243,16 +279,37 @@ const onClickOrderDetailRow = (item) => {
         :items="paginatedData"
         @on-row-click="onClickOrderDetailRow"
       />
+      <Table
+        v-if="tableId === 'OU030100_GRD09003'"
+        v-show="false"
+        id="OU030100_GRD09005"
+        clickable
+        header-variant="secondary"
+        class="overflow-x-auto border-b"
+        :columns="orderDetailTableColumnsByOrderID"
+        :items="orderDetailList"
+      />
 
       <Table
         v-if="tableId === 'OU030100_GRD09004'"
-        id="OU030100_GRD09003"
+        id="OU030100_GRD09004"
         clickable
         header-variant="secondary"
         class="overflow-x-auto border-b"
         :columns="orderDetailTableColumnsByProducts"
         :items="paginatedData"
         @on-row-click="onClickOrderDetailRow"
+      />
+
+      <Table
+        v-if="tableId === 'OU030100_GRD09004'"
+        v-show="false"
+        id="OU030100_GRD09006"
+        clickable
+        header-variant="secondary"
+        class="overflow-x-auto border-b"
+        :columns="orderDetailTableColumnsByProducts"
+        :items="orderDetailList"
       />
     </div>
 
@@ -268,7 +325,7 @@ const onClickOrderDetailRow = (item) => {
         </span>
         to
         <span class="mx-1">
-          {{ isLastPage ? usersList?.length : currentPage * perPage }}
+          {{ isLastPage ? orderDetailList?.length : currentPage * perPage }}
         </span>
         of
         <span class="mx-1">
