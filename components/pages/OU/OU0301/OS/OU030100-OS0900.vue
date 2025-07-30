@@ -257,7 +257,7 @@ const onClickOrderDetailRow = (item) => {
             :disabled="loading || !orderDetailList?.length"
             :loading="loading"
             @click="onClickExportExcel"
-          >
+          > 
             {{ getComponentData ('OU030100_BTN09003', 'caption','EXCEL Export') }}
           </Button>
         </div>
