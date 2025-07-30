@@ -1,6 +1,4 @@
 <script setup>
-import * as XLSX from 'xlsx'
-import { saveAs } from 'file-saver'
 import { decrypt } from '@/stores/common/aes'
 import { useLoadingStore } from '@/stores/common/loading'
 const isloading = useLoadingStore()
@@ -74,6 +72,9 @@ const onClickOrderDetailRefresh = async () => {
 }
 
 const onClickExportExcel = async () => {
+
+  const XLSX = await import('xlsx') // 동적 import
+  const { saveAs } = await import('file-saver') // 이것도 동적으로
 
   if (filters.value.FLT_VIEW_OPT === '0010')
   {
