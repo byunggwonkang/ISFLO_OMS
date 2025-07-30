@@ -1,0 +1,22 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "floating-vue/dist/style.css";
+
+@font-face {
+  font-family: "Avenir";
+  src: url("/fonts/Avenir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import "effects";
+@import "background";
+@import "text";
+@import "border";
+
+body {
+  font-family: "Avenir", sans-serif;
+}
