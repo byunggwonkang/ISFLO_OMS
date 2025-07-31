@@ -71,7 +71,8 @@ const productItemTableColumns = computed(() => {
 })
 
 const checkButtonCanShow = (buttonId) => {
-  return orderDetailInfo.value?.VISIBLE_BUTTONS?.includes(encrypt(buttonId))
+  //return orderDetailInfo.value?.VISIBLE_BUTTONS?.includes(encrypt(buttonId))
+  return false
 }
 
 const updateOrderStatus = async (status) => {
@@ -815,6 +816,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_NAME"
                     :mask="getComponentData('POP00020_TXT01038','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -830,6 +832,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_EMAIL"
                     :mask="getComponentData('POP00020_TXT01039','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -845,6 +848,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_TEL"
                     :mask="getComponentData('POP00020_TXT01040','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -860,6 +864,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_MOBILE"
                     :mask="getComponentData('POP00020_TXT01041','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -891,6 +896,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_ADDR_STATE"
                     :mask="getComponentData('POP00020_TXT01043','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -906,6 +912,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_ADDR_CITY"
                     :mask="getComponentData('POP00020_TXT01044','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -921,6 +928,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_ADDR_POST"
                     :mask="getComponentData('POP00020_TXT01045','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -936,6 +944,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_ADDR_1"
                     :mask="getComponentData('POP00020_TXT01046','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -951,6 +960,7 @@ onMounted(async () => {
                     v-model="formData.FLT_ORD_RECVR_ADDR_2"
                     :mask="getComponentData('POP00020_TXT01047','editMask')"
                     size="xs"
+                    readonly
                   />
                 </FormGroup>
               </div>
@@ -965,6 +975,7 @@ onMounted(async () => {
                     id="POP00020_TXT01048"
                     :mask="getComponentData('POP00020_TXT01048','editMask')"
                     rows="2"
+                    readonly
                     :value="orderDetailData.ORD_DELIVERY_MSG_1"
                   />
                 </FormGroup>
@@ -980,6 +991,7 @@ onMounted(async () => {
                     id="POP00020_TXT01049"
                     :mask="getComponentData('POP00020_TXT01049','editMask')"
                     rows="2"
+                    readonly
                     :value="orderDetailData.ORD_DELIVERY_MSG_2"
                   />
                 </FormGroup>
