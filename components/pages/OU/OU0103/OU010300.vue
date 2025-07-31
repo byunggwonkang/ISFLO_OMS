@@ -19,6 +19,10 @@ const { loading, toggleLoading } = useLoading()
 const brand = ref({})
 const warehouse = ref({})
 
+const STOCK_QTY = ref("0")
+const SALSE_QTY = ref("0")
+const AVILABLE_QTY = ref("0")
+
 watch(brand, async () => {
   await stockOfOriginalItems.fetchWarehouseList()
 
@@ -27,6 +31,23 @@ watch(brand, async () => {
     value: decrypt(warehouseList.value[0]?.WH_CODE) ?? '',
   }
 })
+
+watch(() => itemList, async (value) => {
+  if (value) {
+    let StockQTY = 0
+    let SalseQTY = 0
+    let AvilableQTY = 0
+    for (let i = 0; i < value.value.length; i++) 
+    {
+      StockQTY = StockQTY + Number(decrypt(value.value[i].QUANTITIES[0].STOCK_CLOSED_QTY))
+      SalseQTY = SalseQTY + (Number(decrypt(value.value[i].QUANTITIES[0].STOCK_TOBE_DEC_QTY)) * -1)
+      AvilableQTY = AvilableQTY + Number(decrypt(value.value[i].QUANTITIES[0].STOCK_ACTUAL_AVILABLE_QTY))
+    }
+    STOCK_QTY.value = StockQTY.toLocaleString()
+    SALSE_QTY.value = SalseQTY.toLocaleString()
+    AVILABLE_QTY.value = AvilableQTY.toLocaleString()
+  }
+}, { deep: true })
 
 const fetchItemList = async () => {
   filters.value.FLT_BRAND_CODE = brand.value?.value ?? ''
@@ -115,6 +136,7 @@ function handleInput_TO(e) {
         </FormGroup>
 
         <FormGroup
+          v-if="false"
           :label="getComponentData('OU010300_LBL00003', 'caption')"
           label-id="OU010300_LBL00003"
           label-for="OU010300_TXT00001"
@@ -131,6 +153,7 @@ function handleInput_TO(e) {
         </FormGroup>
 
         <FormGroup
+          v-if="false"
           :label="getComponentData('OU010300_LBL00004', 'caption')"
           label-id="OU010300_LBL00004"
           label-for="OU010300_TXT00002"
@@ -173,6 +196,21 @@ function handleInput_TO(e) {
         </div>
       </div>
     </template>
+
+    <p class="text-base font-semibold text-gray-700 pt-3">
+      Total Stock Qty : 
+      <span class="mx-1">
+        {{ STOCK_QTY }}
+      </span>
+      / Total Salse Qty : 
+      <span class="mx-1">
+        {{ SALSE_QTY }}
+      </span>
+      / Total Avilable Qty : 
+      <span class="mx-1">
+        {{ AVILABLE_QTY }}
+      </span>
+    </p>
 
     <Table
       id="OU010300_GRD00001"
