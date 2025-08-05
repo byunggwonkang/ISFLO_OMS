@@ -28,10 +28,11 @@ onMounted(async () => {
   const { success } = await orderStatus.fetchUserGroupChannelList()
 
   if (success) {
-    filters20.value.FLT_STATUS = [ "70", "71", "72", "73", "74", "75", "76", "77", "78", "79" ];
+    filters20.value.FLT_STATUS = [];
     filters20.value.FLT_CHANNELS = userGroupChannelList.value.map((channel) => decrypt(channel.USER_CHANNEL_CODE))
     filters20.value.FLT_VIEW_OPT = viewType?.value.value ?? '';
     filters20.value.FLT_SPLIT_OPT = orderType?.value.value ?? '';
+    filters20.value.FLT_ORDER_TYPES = ["H"];
     filters20.value.FLT_INCLUDE_REQSUB = "0";
 
     channelList.value = userGroupChannelList.value.map((channel) => {
@@ -48,9 +49,10 @@ onMounted(async () => {
 })
 
 const onClickOrderDetailRefresh = async () => {
-  filters20.value.FLT_STATUS = [ "70", "71", "72", "73", "74", "75", "76", "77", "78", "79" ];
+  filters20.value.FLT_STATUS = [];
   filters20.value.FLT_VIEW_OPT = viewType?.value.value ?? '';
   filters20.value.FLT_SPLIT_OPT = orderType?.value.value ?? '';
+  filters20.value.FLT_ORDER_TYPES = ["H"];
   filters20.value.FLT_CHANNELS = channelList?.value.map((channel) => channel.value) ?? [];
   filters20.value.FLT_INCLUDE_REQSUB = "0";
 
