@@ -54,7 +54,7 @@ const onClickOrderDetailRefresh = async () => {
   filters20.value.FLT_SPLIT_OPT = orderType?.value.value ?? '';
   filters20.value.FLT_ORDER_TYPES = ["H"];
   filters20.value.FLT_CHANNELS = channelList?.value.map((channel) => channel.value) ?? [];
-  filters20.value.FLT_INCLUDE_REQSUB = "0";
+  filters20.value.FLT_INCLUDE_REQSUB = "1";
 
   toggleLoading()
   isloading.isLoading = true
