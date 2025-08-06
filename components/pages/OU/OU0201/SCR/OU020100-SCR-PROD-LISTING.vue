@@ -173,8 +173,8 @@ const { getMaskedValue } = useMasked();
                 value: '',
               },
               ...productCategoryList.map((category) => ({
-                name: category.CATEGORY_NAME,
-                value: category.CATEGORY_CODE,
+                name: decrypt(category.CATEGORY_NAME),
+                value: decrypt(category.CATEGORY_CODE),
               }))
             ]"
             :placeholder="getComponentData('OU020100_CMB00001', 'placeholder')"
@@ -198,8 +198,8 @@ const { getMaskedValue } = useMasked();
                 value: '',
               },
               ...productSubCategoryList.map((category) => ({
-                name: category.CATEGORY_NAME,
-                value: category.CATEGORY_CODE,
+                name: decrypt(category.CATEGORY_NAME),
+                value: decrypt(category.CATEGORY_CODE),
               }))
             ]"
             :placeholder="getComponentData('OU020100_CMB00002', 'placeholder')"
@@ -223,8 +223,8 @@ const { getMaskedValue } = useMasked();
                 value: '',
               },
               ...productSubSubCategoryList.map((category) => ({
-                name: category.CATEGORY_NAME,
-                value: category.CATEGORY_CODE,
+                name: decrypt(category.CATEGORY_NAME),
+                value: decrypt(category.CATEGORY_CODE),
               }))
             ]"
             :placeholder="getComponentData('OU020100_CMB00003', 'placeholder')"
