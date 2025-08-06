@@ -155,7 +155,7 @@ const onClickOrderDetailRow = (item) => {
       <template #cell(ORD_SUM_COUNT_04)="{ value, item }">
         <span
           class="underline underline-offset-4 cursor-pointer hover:text-blue-700 hover:font-extrabold"
-          @click="onClickOrdSumCount(item, '40')"
+          @click="onClickOrdSumCount(item, '32')"
         >
           {{ decrypt(value) }}
         </span>
@@ -164,7 +164,7 @@ const onClickOrderDetailRow = (item) => {
       <template #cell(ORD_SUM_COUNT_05)="{ value, item }">
         <span
           class="underline underline-offset-4 cursor-pointer hover:text-blue-700 hover:font-extrabold"
-          @click="onClickOrdSumCount(item, '50')"
+          @click="onClickOrdSumCount(item, '40')"
         >
           {{ decrypt(value) }}
         </span>
@@ -173,7 +173,7 @@ const onClickOrderDetailRow = (item) => {
       <template #cell(ORD_SUM_COUNT_06)="{ value, item }">
         <span
           class="underline underline-offset-4 cursor-pointer hover:text-blue-700 hover:font-extrabold"
-          @click="onClickOrdSumCount(item, decrypt(value))"
+          @click="onClickOrdSumCount(item, '50')"
         >
           {{ decrypt(value) }}
         </span>
