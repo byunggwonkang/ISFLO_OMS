@@ -41,7 +41,7 @@ watch(() => itemList, async (value) => {
     {
       StockQTY = StockQTY + Number(decrypt(value.value[i].QUANTITIES[0].STOCK_CLOSED_QTY))
       SalseQTY = SalseQTY + (Number(decrypt(value.value[i].QUANTITIES[0].STOCK_TOBE_DEC_QTY)) * -1)
-      AvilableQTY = AvilableQTY + Number(decrypt(value.value[i].QUANTITIES[0].STOCK_ACTUAL_AVILABLE_QTY))
+      AvilableQTY = AvilableQTY + Number(decrypt(value.value[i].QUANTITIES[0].STOCK_EXPACTED_AVILABLE_QTY))
     }
     STOCK_QTY.value = StockQTY.toLocaleString()
     SALSE_QTY.value = SalseQTY.toLocaleString()
