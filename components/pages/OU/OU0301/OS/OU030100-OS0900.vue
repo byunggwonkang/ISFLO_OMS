@@ -24,6 +24,10 @@ const dateType = ref({})
 const channelList = ref([])
 const statusList = ref([])
 
+const TOTAL_ORDER = ref("0")
+const TOTAL_PRODUCT = ref("0")
+const TOTAL_AMOUNT = ref("0")
+
 onMounted(async () => {
   isloading.isLoading = true
   viewType.value = commonData.getOrderViewOptions[0] ?? {};
@@ -52,6 +56,32 @@ onMounted(async () => {
   isloading.isLoading = false
 })
 
+watch(() => orderDetailList, async (value) => {
+  if (value) {
+    let TotalOrder = 0
+    let TotalProduct = 0
+    let TotalAmount = 0
+    let NowOrder = ""
+    for (let i = 0; i < value.value.length; i++) 
+    {
+      if (NowOrder != decrypt(value.value[i].ORD_SID))
+      {
+        TotalOrder = TotalOrder + 1
+        TotalAmount = TotalAmount + Number(decrypt(value.value[i].ORD_SALES_GROSS_AMT))
+        NowOrder = decrypt(value.value[i].ORD_SID)        
+      }    
+      if (viewType?.value.value == "0010")
+        TotalProduct = TotalProduct + Number(decrypt(value.value[i].ORD_ITEM_SUM_QTY))
+      else 
+        TotalProduct = TotalProduct + Number(decrypt(value.value[i].ORD_PROD_ITEM_QTY))  
+      
+    }
+    TOTAL_ORDER.value = TotalOrder.toLocaleString()
+    TOTAL_PRODUCT.value = TotalProduct.toLocaleString()
+    TOTAL_AMOUNT.value = TotalAmount.toLocaleString()
+  }
+}, { deep: true })
+
 const onClickOrderDetailRefresh = async () => {
   filters.value.FLT_VIEW_OPT = viewType?.value.value ?? '';
   filters.value.FLT_SPLIT_OPT = orderType?.value.value ?? '';
@@ -71,51 +101,64 @@ const onClickOrderDetailRefresh = async () => {
   resetPage()
 }
 
+
+
 const onClickExportExcel = async () => {
 
-  const { utils, write } = await import('xlsx')
-  const { saveAs } = await import('file-saver')
+ const { utils, write } = await import('xlsx')
+const { saveAs } = await import('file-saver')
 
-  // 1. 테이블 선택
-  let table = null
-  let fileName = ''
+let table = null
+let fileName = ''
 
-  if (filters.value.FLT_VIEW_OPT === '0010') {
-    table = document.getElementById('OU030100_GRD09005')
-    fileName = 'Order List by Orders.xlsx'
-  } else {
-    table = document.getElementById('OU030100_GRD09006')
-    fileName = 'Order List by Products.xlsx'
-  }
+if (filters.value.FLT_VIEW_OPT === '0010') {
+  table = document.getElementById('OU030100_GRD09005')
+  fileName = 'Order List by Orders.xlsx'
+} else {
+  table = document.getElementById('OU030100_GRD09006')
+  fileName = 'Order List by Products.xlsx'
+}
 
-  if (!table) {
-    return
-  }
+if (!table) return
 
-  // 2. 워크북 생성 (원본 테이블 그대로)
-  const wb = utils.table_to_book(table, { sheet: 'Sheet1' })
-  const ws = wb.Sheets['Sheet1']
+// 워크북 생성 (변환 없이)
+const wb = utils.table_to_book(table, {
+  sheet: 'Sheet1',
+  raw: true
+})
+const ws = wb.Sheets['Sheet1']
 
-  // 3. 모든 셀을 텍스트 형식으로 변환
-  const sheetRef = ws['!ref']
-  if (sheetRef) {
-    const range = utils.decode_range(sheetRef)
-    for (let R = range.s.r; R <= range.e.r; ++R) {
-      for (let C = range.s.c; C <= range.e.c; ++C) {
-        const addr = utils.encode_cell({ r: R, c: C })
-        const cell = ws[addr]
-        if (cell && cell.v != null) {
-          cell.t = 's'           // 셀 타입을 문자열로 강제
-          cell.z = '@'           // 엑셀 표시 형식을 텍스트로
-          cell.v = String(cell.v)
-        }
+// 날짜를 문자열로 강제 고정
+const sheetRef = ws['!ref']
+if (sheetRef) {
+  const range = utils.decode_range(sheetRef)
+
+  for (let R = range.s.r; R <= range.e.r; ++R) {
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const addr = utils.encode_cell({ r: R, c: C })
+      const cell = ws[addr]
+      if (!cell || cell.v == null) continue
+      if (R === 0) continue // 헤더는 제외
+
+      if (C === 12) {
+        // 날짜 문자열로 그대로 저장 (변환 X)
+        cell.t = 's'
+        cell.z = '@'
+        cell.v = String(cell.v)
+      } else {
+        cell.t = 's'
+        cell.z = '@'
+        cell.v = String(cell.v)
       }
     }
   }
+}
 
-  // 4. 다운로드
-  const wbout = write(wb, { bookType: 'xlsx', type: 'array' })
-  saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
+const wbout = write(wb, {
+  bookType: 'xlsx',
+  type: 'array'
+})
+saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
   
 }
 
@@ -294,6 +337,21 @@ const onClickOrderDetailRow = (item) => {
       <span v-if="getGridData('OU030100_GRD09003', 'display') === 'Y'">
         {{ getGridData('OU030100_GRD09003', 'caption') }}
       </span>
+
+      <p class="text-base font-semibold text-gray-700 pt-3">
+        Total Order : 
+        <span class="mx-1">
+          {{ TOTAL_ORDER }}
+        </span>
+        / Total Product : 
+        <span class="mx-1">
+          {{ TOTAL_PRODUCT }}
+        </span>
+        / Total Amount : 
+        <span class="mx-1">
+          {{ TOTAL_AMOUNT }}
+        </span>
+      </p>
 
       <Table
         v-if="tableId === 'OU030100_GRD09003'"
