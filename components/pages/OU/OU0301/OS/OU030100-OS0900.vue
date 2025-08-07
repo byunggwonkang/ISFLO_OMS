@@ -334,24 +334,25 @@ const onClickOrderDetailRow = (item) => {
     </div>
 
     <div class="pl-3 space-y-2">
-      <span v-if="getGridData('OU030100_GRD09003', 'display') === 'Y'">
-        {{ getGridData('OU030100_GRD09003', 'caption') }}
-      </span>
-
-      <p class="text-base font-semibold text-gray-700 pt-3">
-        Total Order : 
-        <span class="mx-1">
-          {{ TOTAL_ORDER }}
+      <div class="grid grid-cols-2 items-center pl-3 pb-3 border-b">
+        <span v-if="getGridData('OU030100_GRD09003', 'display') === 'Y'">
+          {{ getGridData('OU030100_GRD09003', 'caption') }}
         </span>
-        / Total Product : 
-        <span class="mx-1">
-          {{ TOTAL_PRODUCT }}
-        </span>
-        / Total Amount : 
-        <span class="mx-1">
-          {{ TOTAL_AMOUNT }}
-        </span>
-      </p>
+        <p class="text-base font-semibold text-gray-700 text-right">
+          Total Order : 
+          <span class="mx-1">
+            {{ TOTAL_ORDER }}
+          </span>
+          / Total Product : 
+          <span class="mx-1">
+            {{ TOTAL_PRODUCT }}
+          </span>
+          / Total Amount : 
+          <span class="mx-1">
+            {{ TOTAL_AMOUNT }}
+          </span>
+        </p>
+      </div>
 
       <Table
         v-if="tableId === 'OU030100_GRD09003'"
