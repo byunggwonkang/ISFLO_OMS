@@ -105,61 +105,88 @@ const onClickOrderDetailRefresh = async () => {
 
 const onClickExportExcel = async () => {
 
- const { utils, write } = await import('xlsx')
-const { saveAs } = await import('file-saver')
+  const { utils, write } = await import('xlsx')
+  const { saveAs } = await import('file-saver')
 
-let table = null
-let fileName = ''
+  let table = null
+  let fileName = ''
 
-if (filters.value.FLT_VIEW_OPT === '0010') {
-  table = document.getElementById('OU030100_GRD09005')
-  fileName = 'Order List by Orders.xlsx'
-} else {
-  table = document.getElementById('OU030100_GRD09006')
-  fileName = 'Order List by Products.xlsx'
-}
+  if (filters.value.FLT_VIEW_OPT === '0010') {
+    table = document.getElementById('OU030100_GRD09005')
+    fileName = 'Order List by Orders.xlsx'
+  } else {
+    table = document.getElementById('OU030100_GRD09006')
+    fileName = 'Order List by Products.xlsx'
+  }
 
-if (!table) return
+  if (!table) return
 
-// 워크북 생성 (변환 없이)
-const wb = utils.table_to_book(table, {
-  sheet: 'Sheet1',
-  raw: true
-})
-const ws = wb.Sheets['Sheet1']
+  // 워크북 생성 (변환 없이)
+  const wb = utils.table_to_book(table, {
+    sheet: 'Sheet1',
+    raw: true
+  })
+  const ws = wb.Sheets['Sheet1']
 
-// 날짜를 문자열로 강제 고정
-const sheetRef = ws['!ref']
-if (sheetRef) {
-  const range = utils.decode_range(sheetRef)
+  // 날짜를 문자열로 강제 고정
+  const sheetRef = ws['!ref']
+  if (sheetRef) {
+    const range = utils.decode_range(sheetRef)
 
-  for (let R = range.s.r; R <= range.e.r; ++R) {
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const addr = utils.encode_cell({ r: R, c: C })
-      const cell = ws[addr]
-      if (!cell || cell.v == null) continue
-      if (R === 0) continue // 헤더는 제외
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const addr = utils.encode_cell({ r: R, c: C })
+        const cell = ws[addr]
+        if (!cell || cell.v == null) continue
+        if (R === 0) continue // 헤더는 제외
 
-      if (C === 12) {
-        // 날짜 문자열로 그대로 저장 (변환 X)
-        cell.t = 's'
-        cell.z = '@'
-        cell.v = String(cell.v)
-      } else {
-        cell.t = 's'
-        cell.z = '@'
-        cell.v = String(cell.v)
+        if (C === 27 || C === 28 || C === 29 || C === 30 || C === 31 || C === 32) {
+          // 날짜 문자열로 그대로 저장 (변환 X)
+          cell.t = 'n'               // number 형식
+          cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
+          cell.v = Number(cell.v.replace(/,/g, ''))    // 문자열 → 숫자 변환
+        } else {
+
+          if (filters.value.FLT_VIEW_OPT === '0010') {
+            if (C === 33 || C === 34) {
+              // 날짜 문자열로 그대로 저장 (변환 X)
+              cell.t = 'n'               // number 형식
+              cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
+              cell.v = Number(cell.v.replace(/,/g, ''))    // 문자열 → 숫자 변환
+            }
+            else
+            {
+              cell.t = 's'
+              cell.z = '@'
+              cell.v = String(cell.v)
+            }
+          } else {
+            if (C === 37 ||C === 41 || C === 42 || C === 43 || C === 44 || C === 45) {
+              // 날짜 문자열로 그대로 저장 (변환 X)
+              cell.t = 'n'               // number 형식
+              cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
+              cell.v = Number(cell.v.replace(/,/g, ''))    // 문자열 → 숫자 변환
+            }
+            else
+            {
+              cell.t = 's'
+              cell.z = '@'
+              cell.v = String(cell.v)
+            }
+          }
+          
+          
+        }
       }
     }
   }
-}
 
-const wbout = write(wb, {
-  bookType: 'xlsx',
-  type: 'array'
-})
-saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
-  
+  const wbout = write(wb, {
+    bookType: 'xlsx',
+    type: 'array'
+  })
+  saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
+    
 }
 
 const orderDetailTableColumnsByOrderID = computed(() => {
