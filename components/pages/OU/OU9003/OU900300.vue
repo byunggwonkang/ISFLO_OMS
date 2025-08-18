@@ -344,7 +344,22 @@ const onClickSearch = async () => {
             {{ decrypt(option.ITEM_NAME) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.ITEM_DESCR2) }}
+            <div
+              v-if="decrypt(option.ITEM_DESCR2) .length > 10"
+              v-tooltip="{
+                content: `<div class='p-2 border border-gray-300 rounded bg-gray-50 text-gray-700 font-mono text-md'
+                          style='max-width: 300px; white-space: pre-wrap; word-break: break-all; overflow-wrap: break-word;'
+                          >${decrypt(option.ITEM_DESCR2) }</div>`,
+                placement: 'top',
+                trigger: 'hover',
+                html: true
+              }"
+            >
+              {{ truncateText(decrypt(option.ITEM_DESCR2) , 10) }}
+            </div> 
+            <div v-else-if="decrypt(option.ITEM_DESCR2) .length <= 10">
+              {{ decrypt(option.ITEM_DESCR2) }}
+            </div> 
           </TableCell> 
           <TableCell class="text-center">
             {{ decrypt(option.ITEM_COLOR) }}
@@ -695,7 +710,22 @@ const onClickSearch = async () => {
             {{ decrypt(option.ITEM_NAME) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.ITEM_DESCR2) }}
+            <div
+              v-if="decrypt(option.ITEM_DESCR2) .length > 10"
+              v-tooltip="{
+                content: `<div class='p-2 border border-gray-300 rounded bg-gray-50 text-gray-700 font-mono text-md'
+                          style='max-width: 300px; white-space: pre-wrap; word-break: break-all; overflow-wrap: break-word;'
+                          >${decrypt(option.ITEM_DESCR2) }</div>`,
+                placement: 'top',
+                trigger: 'hover',
+                html: true
+              }"
+            >
+              {{ truncateText(decrypt(option.ITEM_DESCR2) , 10) }}
+            </div> 
+            <div v-else-if="decrypt(option.ITEM_DESCR2) .length <= 10">
+              {{ decrypt(option.ITEM_DESCR2) }}
+            </div> 
           </TableCell> 
           <TableCell class="text-center">
             {{ decrypt(option.ITEM_COLOR) }}
@@ -748,7 +778,12 @@ const onClickSearch = async () => {
     </div>
   </AppContent>
 </template>
-
+<script>
+function truncateText(text, length) {
+  if (!text) return ''
+  return text.length > length ? text.slice(0, length) + '...' : text
+}
+</script>
 <style scoped>
 
 </style>
