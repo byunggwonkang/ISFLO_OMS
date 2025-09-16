@@ -3,6 +3,8 @@ import {PlusIcon} from "@heroicons/vue/24/solid";
 import VueFeather from "vue-feather";
 import moment from "moment";
 import { encrypt, decrypt } from '@/stores/common/aes'
+import { useLoadingStore } from '@/stores/common/loading'
+const isloading = useLoadingStore()
 
 const pageLoader = usePageLoaderStore()
 const saleProducts = useSaleProductsStore()
@@ -76,6 +78,7 @@ onBeforeMount(async () => {
 })
 
 onMounted(async () => {
+  isloading.isLoading = true
   productCategory.value = {
     name: 'All',
     value: '',
@@ -93,6 +96,7 @@ onMounted(async () => {
 
   await saleProducts.fetchUserGroupBrandList()
   await commonData.fetchOU020100CommonData()
+  isloading.isLoading = false
 })
 
 const productListTableFields = computed(() => {
@@ -118,7 +122,9 @@ const search = async () => {
   filters.value.FLT_REGIST_END_DATE = moment(filters.value.FLT_REGIST_END_DATE).format('YYYY-MM-DD')
 
   toggleLoading()
+  isloading.isLoading = true
   await saleProducts.fetchProductList()
+  isloading.isLoading = false
   toggleLoading()
 
   resetPage()
@@ -151,8 +157,8 @@ const { getMaskedValue } = useMasked();
             placeholder="Select Brand"
             :max-items="4"
             :options="userGroupBrandList.map((brand) => ({
-              name: decrypt(brand.USER_BRAND_FNAME),
-              value: parseInt(decrypt(brand.USER_BRAND_CODE)).toString(),
+              name: decrypt(brand.BRAND_FNAME_ENG),
+              value: parseInt(decrypt(brand.BRAND_CODE)).toString(),
             }))"
           />
         </FormGroup>
