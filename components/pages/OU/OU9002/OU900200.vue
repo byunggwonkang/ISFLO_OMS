@@ -88,7 +88,7 @@ const onClickExportExcel = async () => {
         if (R === 0) continue // 헤더는 제외
 
         if (filters.value.FLT_REPORT_TYPE === '0010' || filters.value.FLT_REPORT_TYPE === '0020') {
-            if (C === 6 || C === 7) {
+            if (C === 7 || C === 8) {
               // 날짜 문자열로 그대로 저장 (변환 X)
               cell.t = 'n'               // number 형식
               cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)

@@ -95,7 +95,7 @@ const onClickExportExcel = async () => {
               cell.v = String(cell.v)
             }
           } else {
-            if (C === 16 || C === 17 || C === 18 || C === 19) {
+            if (C === 17 || C === 18 || C === 19 || C === 20) {
               // 날짜 문자열로 그대로 저장 (변환 X)
               cell.t = 'n'               // number 형식
               cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
