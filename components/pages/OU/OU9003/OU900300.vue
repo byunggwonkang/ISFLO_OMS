@@ -132,8 +132,8 @@ onMounted(async () => {
   await salseProduct.fetchUserGroupBrandList()
 
   brand.value = {
-    name: decrypt(userGroupBrandList.value[0]?.USER_BRAND_FNAME) ?? '',
-    value: parseInt(decrypt(userGroupBrandList.value[0]?.USER_BRAND_CODE)).toString() ?? '',
+    name: decrypt(userGroupBrandList.value[0]?.BRAND_FNAME_ENG) ?? '',
+    value: parseInt(decrypt(userGroupBrandList.value[0]?.BRAND_CODE)).toString() ?? '',
   }
 
   ReportType.value = {
@@ -173,8 +173,8 @@ const onClickSearch = async () => {
             id="OU900300_CMB00001"
             v-model="brand"
             :options="userGroupBrandList.map((brand) => ({
-              name: decrypt(brand.USER_BRAND_FNAME),
-              value: parseInt(decrypt(brand.USER_BRAND_CODE)).toString(),
+              name: decrypt(brand.BRAND_FNAME_ENG),
+              value: parseInt(decrypt(brand.BRAND_CODE)).toString(),
             }))"
           />
         </FormGroup>

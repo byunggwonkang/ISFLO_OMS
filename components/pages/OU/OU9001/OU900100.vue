@@ -394,7 +394,7 @@ const onClickSearch = async () => {
         <TableHeadCell class="text-center" colspan="8">
           Order Information
         </TableHeadCell>
-        <TableHeadCell class="text-center" colspan="8">
+        <TableHeadCell class="text-center" colspan="9">
           Product Information
         </TableHeadCell>
         <TableHeadCell class="text-center" colspan="4">
@@ -428,6 +428,9 @@ const onClickSearch = async () => {
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product No
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Product Brand
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product Code
@@ -464,6 +467,7 @@ const onClickSearch = async () => {
         </TableHeadCell>
       </TableHead>   
       <TableHead>
+        <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
@@ -524,6 +528,9 @@ const onClickSearch = async () => {
           </TableCell>  
           <TableCell class="text-center">
             {{ option.ORDER_ITEM_NO ? decrypt(option.ORDER_ITEM_NO) : '-' }}
+          </TableCell>
+          <TableCell class="text-center">
+            {{ option.ITEM_BRAND_FNAME ? decrypt(option.ITEM_BRAND_FNAME) : '-' }}
           </TableCell>
           <TableCell class="text-center">
             {{ option.ITEM_CD ? decrypt(option.ITEM_CD) : '-' }}
@@ -691,7 +698,7 @@ const onClickSearch = async () => {
         <TableHeadCell class="text-center" colspan="8">
           Order Information
         </TableHeadCell>
-        <TableHeadCell class="text-center" colspan="8">
+        <TableHeadCell class="text-center" colspan="9">
           Product Information
         </TableHeadCell>
         <TableHeadCell class="text-center" colspan="4">
@@ -725,6 +732,9 @@ const onClickSearch = async () => {
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product No
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Product Brand
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product Code
@@ -761,6 +771,7 @@ const onClickSearch = async () => {
         </TableHeadCell>
       </TableHead>   
       <TableHead>
+        <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
@@ -821,6 +832,9 @@ const onClickSearch = async () => {
           </TableCell>  
           <TableCell class="text-center">
             {{ option.ORDER_ITEM_NO ? decrypt(option.ORDER_ITEM_NO) : '-' }}
+          </TableCell>
+          <TableCell class="text-center">
+            {{ option.ITEM_BRAND_FNAME ? decrypt(option.ITEM_BRAND_FNAME) : '-' }}
           </TableCell>
           <TableCell class="text-center">
             {{ option.ITEM_CD ? decrypt(option.ITEM_CD) : '-' }}

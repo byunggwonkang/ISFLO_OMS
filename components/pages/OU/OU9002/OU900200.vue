@@ -287,6 +287,9 @@ const onClickSearch = async () => {
           Rank
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Brand
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Model Code
         </TableHeadCell>
         <TableHeadCell class="text-center">
@@ -315,6 +318,7 @@ const onClickSearch = async () => {
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell class="text-right"> 
           {{ ProductQty }}
         </TableHeadCell>
@@ -330,6 +334,9 @@ const onClickSearch = async () => {
           <TableCell class="text-center">
             {{ decrypt(option.RANK_NO) }}
           </TableCell>
+          <TableCell class="text-center">
+            {{ decrypt(option.PRODUCT_BRAND) }}
+          </TableCell> 
           <TableCell class="text-center">
             {{ decrypt(option.PRODUCT_CODE) }}
           </TableCell> 
@@ -426,6 +433,9 @@ const onClickSearch = async () => {
           Rank
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Brand
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Model Code
         </TableHeadCell>
         <TableHeadCell class="text-center">
@@ -454,6 +464,7 @@ const onClickSearch = async () => {
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell class="text-right"> 
           {{ ProductQty }}
         </TableHeadCell>
@@ -469,6 +480,9 @@ const onClickSearch = async () => {
           <TableCell class="text-center">
             {{ decrypt(option.RANK_NO) }}
           </TableCell>
+          <TableCell class="text-center">
+            {{ decrypt(option.PRODUCT_BRAND) }}
+          </TableCell> 
           <TableCell class="text-center">
             {{ decrypt(option.PRODUCT_CODE) }}
           </TableCell> 
