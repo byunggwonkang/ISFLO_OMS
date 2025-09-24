@@ -82,7 +82,7 @@ const onClickExportExcel = async () => {
         if (R === 0||R === 1) continue // 헤더는 제외
 
         if (filters.value.FLT_REPORT_TYPE === '0010') {
-            if (C === 8 || C === 9 || C === 10 || C === 11) {
+            if (C === 12 || C === 13 || C === 14 || C === 15) {
               // 날짜 문자열로 그대로 저장 (변환 X)
               cell.t = 'n'               // number 형식
               cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
@@ -95,7 +95,7 @@ const onClickExportExcel = async () => {
               cell.v = String(cell.v)
             }
           } else {
-            if (C === 17 || C === 18 || C === 19 || C === 20) {
+            if (C === 21 || C === 22 || C === 23 || C === 24) {
               // 날짜 문자열로 그대로 저장 (변환 X)
               cell.t = 'n'               // number 형식
               cell.z = '#,###'        // 소수점 둘째 자리까지 숫자 (예: 1,234.56)
@@ -275,7 +275,7 @@ const onClickSearch = async () => {
       header-variant="secondary"
     >
       <TableHead>   
-        <TableHeadCell class="text-center" colspan="12">
+        <TableHeadCell class="text-center" colspan="16">
           Order Information
         </TableHeadCell>
       </TableHead>
@@ -293,16 +293,28 @@ const onClickSearch = async () => {
           Time
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Customer ID
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Customer Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Order No
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Purchase Site
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Name
+          Orderer Name
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Mobile
+          Orderer Mobile
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Mobile
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Products QTY
@@ -318,6 +330,10 @@ const onClickSearch = async () => {
         </TableHeadCell>
       </TableHead>   
       <TableHead>
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
@@ -357,17 +373,29 @@ const onClickSearch = async () => {
             {{ decrypt(option.ORDER_TIME) }}
           </TableCell>  
           <TableCell class="text-center">
+            {{ decrypt(option.CUST_ID) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_MANE) }}
+          </TableCell> 
+          <TableCell class="text-center">
             {{ decrypt(option.ORDER_ID) }}
           </TableCell>  
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_MALL) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MANE_M) }}
+            {{ decrypt(option.ORDERER_MANE_M) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MOBILE_M) }}
+            {{ decrypt(option.ORDERER_MOBILE_M) }}
           </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MANE_M) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MOBILE_M) }}
+          </TableCell> 
           <TableCell class="text-right">
             {{ Number(decrypt(option.ORDER_ITEM_QTY)).toLocaleString() }}
           </TableCell>  
@@ -391,7 +419,7 @@ const onClickSearch = async () => {
       header-variant="secondary"
     >
       <TableHead>   
-        <TableHeadCell class="text-center" colspan="8">
+        <TableHeadCell class="text-center" colspan="12">
           Order Information
         </TableHeadCell>
         <TableHeadCell class="text-center" colspan="9">
@@ -415,16 +443,28 @@ const onClickSearch = async () => {
           Time
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Customer ID
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Customer Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Order No
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Purchase Site
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Name
+          Orderer Name
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Mobile
+          Orderer Mobile
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Mobile
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product No
@@ -484,6 +524,10 @@ const onClickSearch = async () => {
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell class="text-right"> 
           {{ ProductQty }}
         </TableHeadCell>
@@ -513,7 +557,13 @@ const onClickSearch = async () => {
           </TableCell>  
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_TIME) }}
+          </TableCell> 
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_ID) }}
           </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_MANE) }}
+          </TableCell>   
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_ID) }}
           </TableCell>  
@@ -521,10 +571,16 @@ const onClickSearch = async () => {
             {{ decrypt(option.ORDER_MALL) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MANE_M) }}
+            {{ decrypt(option.ORDERER_MANE_M) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MOBILE_M) }}
+            {{ decrypt(option.ORDERER_MOBILE_M) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MANE_M) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MOBILE_M) }}
           </TableCell>  
           <TableCell class="text-center">
             {{ option.ORDER_ITEM_NO ? decrypt(option.ORDER_ITEM_NO) : '-' }}
@@ -578,7 +634,7 @@ const onClickSearch = async () => {
       clickable
     >
       <TableHead>   
-        <TableHeadCell class="text-center" colspan="12">
+        <TableHeadCell class="text-center" colspan="16">
           Order Information
         </TableHeadCell>
       </TableHead>
@@ -596,16 +652,28 @@ const onClickSearch = async () => {
           Time
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Customer ID
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Customer Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Order No
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Purchase Site
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Name
+          Orderer Name
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Mobile
+          Orderer Mobile
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Mobile
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Products QTY
@@ -621,6 +689,10 @@ const onClickSearch = async () => {
         </TableHeadCell>
       </TableHead>   
       <TableHead>
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
@@ -658,6 +730,12 @@ const onClickSearch = async () => {
           </TableCell>  
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_TIME) }}
+          </TableCell>   
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_ID) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_MANE) }}
           </TableCell>  
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_ID) }}
@@ -666,10 +744,16 @@ const onClickSearch = async () => {
             {{ decrypt(option.ORDER_MALL) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MANE_M) }}
+            {{ decrypt(option.ORDERER_MANE_M) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MOBILE_M) }}
+            {{ decrypt(option.ORDERER_MOBILE_M) }}
+          </TableCell>   
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MANE_M) }}
+          </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MOBILE_M) }}
           </TableCell>  
           <TableCell class="text-right">
             {{ Number(decrypt(option.ORDER_ITEM_QTY)).toLocaleString() }}
@@ -695,7 +779,7 @@ const onClickSearch = async () => {
       header-variant="secondary"
     >
       <TableHead>   
-        <TableHeadCell class="text-center" colspan="8">
+        <TableHeadCell class="text-center" colspan="12">
           Order Information
         </TableHeadCell>
         <TableHeadCell class="text-center" colspan="9">
@@ -719,16 +803,28 @@ const onClickSearch = async () => {
           Time
         </TableHeadCell>
         <TableHeadCell class="text-center">
+          Customer ID
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Customer Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
           Order No
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Purchase Site
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Name
+          Orderer Name
         </TableHeadCell>
         <TableHeadCell class="text-center">
-          Customer Mobile
+          Orderer Mobile
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Name
+        </TableHeadCell>
+        <TableHeadCell class="text-center">
+          Recipient Mobile
         </TableHeadCell>
         <TableHeadCell class="text-center">
           Product No
@@ -788,6 +884,10 @@ const onClickSearch = async () => {
         <TableHeadCell />
         <TableHeadCell />
         <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
+        <TableHeadCell />
         <TableHeadCell class="text-right"> 
           {{ ProductQty }}
         </TableHeadCell>
@@ -817,7 +917,13 @@ const onClickSearch = async () => {
           </TableCell>  
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_TIME) }}
+          </TableCell>   
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_ID) }}
           </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.CUST_MANE) }}
+          </TableCell> 
           <TableCell class="text-center">
             {{ decrypt(option.ORDER_ID) }}
           </TableCell>  
@@ -825,11 +931,17 @@ const onClickSearch = async () => {
             {{ decrypt(option.ORDER_MALL) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MANE_M) }}
+            {{ decrypt(option.ORDERER_MANE_M) }}
           </TableCell>  
           <TableCell class="text-center">
-            {{ decrypt(option.CUST_MOBILE_M) }}
+            {{ decrypt(option.ORDERER_MOBILE_M) }}
+          </TableCell>   
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MANE_M) }}
           </TableCell>  
+          <TableCell class="text-center">
+            {{ decrypt(option.SHIP_MOBILE_M) }}
+          </TableCell> 
           <TableCell class="text-center">
             {{ option.ORDER_ITEM_NO ? decrypt(option.ORDER_ITEM_NO) : '-' }}
           </TableCell>
