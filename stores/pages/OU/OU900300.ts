@@ -20,12 +20,10 @@ export const useSalesProductStore = defineStore('sales-product', {
   },
   actions: {
     async fetchUserGroupBrandList() {
-      const { data }: any = await useAPIFetch('/IS_PA_BRAND_LIST_GET', {
+      const { data }: any = await useAPIFetch('/IS_SA_USERGROUP_BRAND_LIST_GET', {
         method: 'post',
         body: {
           USER_SID: encrypt(user.value?.USER_SID),
-          FLT_BRAND_CODE: encrypt(""),
-          FLT_INCLUDE_INACTIVE: encrypt(""),
         }
       });
 

@@ -157,8 +157,8 @@ const { getMaskedValue } = useMasked();
             placeholder="Select Brand"
             :max-items="4"
             :options="userGroupBrandList.map((brand) => ({
-              name: decrypt(brand.BRAND_FNAME_ENG),
-              value: parseInt(decrypt(brand.BRAND_CODE)).toString(),
+              name: decrypt(brand.USER_BRAND_FNAME),
+              value: parseInt(decrypt(brand.USER_BRAND_CODE)).toString(),
             }))"
           />
         </FormGroup>

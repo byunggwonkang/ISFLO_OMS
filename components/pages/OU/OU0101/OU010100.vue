@@ -30,8 +30,8 @@ onMounted(async () => {
   await originalItems.fetchUserGroupBrandList()
 
   brand.value = {
-    name: decrypt(userGroupBrandList.value[0]?.BRAND_FNAME_ENG) ?? '',
-    value: parseInt(decrypt(userGroupBrandList.value[0]?.BRAND_CODE)).toString() ?? '',
+    name: decrypt(userGroupBrandList.value[0]?.USER_BRAND_FNAME) ?? '',
+    value: parseInt(decrypt(userGroupBrandList.value[0]?.USER_BRAND_CODE)).toString() ?? '',
   }
   isloading.isLoading = false
   togglePageLoading()
@@ -83,8 +83,8 @@ const itemsListTableFields = computed(() => {
             id="OU010100_CMB00001"
             v-model="brand"
             :options="userGroupBrandList.map((brand) => ({
-              name: decrypt(brand.BRAND_FNAME_ENG),
-              value: parseInt(decrypt(brand.BRAND_CODE)).toString(),
+              name: decrypt(brand.USER_BRAND_FNAME),
+              value: parseInt(decrypt(brand.USER_BRAND_CODE)).toString(),
             }))"
           />
         </FormGroup>
